@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timberwolves Schedule - NBA Fan Site</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Schedule Page Specific Styles */
+        .schedule-section {
+            padding: 100px 0 60px;
+            background-color: white;
+        }
+        
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .schedule-header h2 {
+            font-size: 2.5rem;
+            color: #0C2340;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .schedule-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #00BFFF;
+        }
+        
+        .schedule-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background-color: #f8f9fa;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 10px 10px 0;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background-color: #00BFFF;
+            color: white;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background-color: #e9ecef;
+        }
+        
+        .schedule-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .schedule-list {
+            margin-bottom: 40px;
+        }
+        
+        .schedule-group {
+            margin-bottom: 40px;
+        }
+        
+        .schedule-date {
+            background-color: #0C2340;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px 5px 0 0;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .schedule-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-top: none;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .schedule-item:nth-child(even) {
+            background-color: white;
+        }
+        
+        .schedule-item:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .game-time {
+            flex: 0 0 150px;
+            font-weight: 600;
+            color: #0C2340;
+        }
+        
+        .game-vs {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            margin: 10px 0;
+        }
+        
+        .team-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .team-info.home {
+            justify-content: flex-end;
+        }
+        
+        .team-logo-small {
+            width: 40px;
+            height: 40px;
+            margin: 0 15px;
+        }
+        
+        .team-name-small {
+            font-weight: 600;
+            color: #0C2340;
+        }
+        
+        .team-name-small.home {
+            color: #00BFFF;
+        }
+        
+        .versus {
+            font-weight: bold;
+            color: #666;
+            margin: 0 20px;
+        }
+        
+        .game-result {
+            flex: 0 0 120px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .win {
+            color: #4CAF50;
+        }
+        
+        .loss {
+            color: #F44336;
+        }
+        
+        .game-status {
+            flex: 0 0 100px;
+            text-align: center;
+        }
+        
+        .live-badge {
+            background-color: #F44336;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .upcoming-badge {
+            background-color: #2196F3;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .season-stats {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stats-title {
+            font-size: 1.8rem;
+            color: #0C2340;
+            font-weight: 600;
+        }
+        
+        .stats-overall {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .win-loss {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .win-loss .wins {
+            color: #4CAF50;
+        }
+        
+        .win-loss .losses {
+            color: #F44336;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00BFFF;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-vs {
+                flex-direction: column;
+                min-width: 100%;
+            }
+            
+            .team-info,
+            .team-info.home {
+                justify-content: center;
+                margin: 10px 0;
+            }
+            
+            .versus {
+                margin: 10px 0;
+            }
+            
+            .game-time,
+            .game-result,
+            .game-status {
+                flex: 1 0 100%;
+                text-align: center;
+                margin: 5px 0;
+            }
+            
+            .stats-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html"><img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo"></a>
+                    <span class="team-name">Minnesota Timberwolves</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="schedule.html" class="active">Schedule</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="culture.html">Team Culture</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Schedule Section -->
+    <section class="schedule-section">
+        <div class="container">
+            <div class="schedule-header">
+                <h2>2025-2026 Season Schedule</h2>
+                <p>Minnesota Timberwolves Latest Game Schedule</p>
+            </div>
+
+            <!-- Schedule Tabs -->
+            <div class="schedule-tabs">
+                <button class="tab-btn active" data-tab="all">All Games</button>
+                <button class="tab-btn" data-tab="upcoming">Upcoming</button>
+                <button class="tab-btn" data-tab="home">Home</button>
+                <button class="tab-btn" data-tab="away">Away</button>
+            </div>
+
+            <!-- Season Statistics -->
+            <div class="season-stats">
+                <div class="stats-header">
+                    <div class="stats-title">Season Record</div>
+                    <div class="stats-overall">
+                        <div class="win-loss">
+                            <span class="wins">42</span> - <span class="losses">40</span>
+                        </div>
+                        <div>Win Rate: 51.2%</div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">25</div>
+                        <div class="stat-label">Home Wins</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">17</div>
+                        <div class="stat-label">Away Wins</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Win Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Rank (Northwest Division)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule List -->
+            <div class="schedule-container">
+                <!-- Upcoming Games -->
+                <div class="schedule-group">
+                    <div class="schedule-date">
+                        <span>Upcoming Games</span>
+                        <span>4 Games</span>
+                    </div>
+
+                    <!-- Game Item 1 -->
+                    <div class="schedule-item" data-type="upcoming" data-location="home">
+                        <div class="game-time">Oct 25, Wed</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">LA Lakers</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Lakers Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                                <span class="team-name-small home">Timberwolves (Home)</span>
+                            </div>
+                        </div>
+                        <div class="game-status">
+                            <span class="upcoming-badge">19:30</span>
+                        </div>
+                    </div>
+
+                    <!-- Game Item 2 -->
+                    <div class="schedule-item" data-type="upcoming" data-location="away">
+                        <div class="game-time">Oct 27, Fri</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Timberwolves (A)</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/den.png" alt="Nuggets Logo" class="team-logo-small">
+                                <span class="team-name-small home">Denver Nuggets</span>
+                            </div>
+                        </div>
+                        <div class="game-status">
+                            <span class="upcoming-badge">20:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Game Item 3 -->
+                    <div class="schedule-item" data-type="upcoming" data-location="home">
+                        <div class="game-time">Oct 29, Sun</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Houston Rockets</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/hou.png" alt="Rockets Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                                <span class="team-name-small home">Timberwolves (H)</span>
+                            </div>
+                        </div>
+                        <div class="game-status">
+                            <span class="upcoming-badge">17:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Game Item 4 -->
+                    <div class="schedule-item" data-type="upcoming" data-location="away">
+                        <div class="game-time">Oct 31, Tue</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Timberwolves (A)</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/dal.png" alt="Mavericks Logo" class="team-logo-small">
+                                <span class="team-name-small home">Dallas Mavericks</span>
+                            </div>
+                        </div>
+                        <div class="game-status">
+                            <span class="upcoming-badge">19:30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Game Results -->
+                <div class="schedule-group">
+                    <div class="schedule-date">
+                        <span>Recent Game Results</span>
+                        <span>5 Games</span>
+                    </div>
+
+                    <!-- Game Item 1 -->
+                    <div class="schedule-item" data-type="past" data-location="home">
+                        <div class="game-time">Oct 20, Fri</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Golden State Warriors</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/gs.png" alt="Warriors Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                                <span class="team-name-small home">Timberwolves (H)</span>
+                            </div>
+                        </div>
+                        <div class="game-result win">
+                            115 - 108
+                        </div>
+                    </div>
+
+                    <!-- Game Item 2 -->
+                    <div class="schedule-item" data-type="past" data-location="away">
+                        <div class="game-time">Oct 18, Wed</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Timberwolves (A)</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/mil.png" alt="Bucks Logo" class="team-logo-small">
+                                <span class="team-name-small home">Milwaukee Bucks</span>
+                            </div>
+                        </div>
+                        <div class="game-result loss">
+                            105 - 112
+                        </div>
+                    </div>
+
+                    <!-- Game Item 3 -->
+                    <div class="schedule-item" data-type="past" data-location="home">
+                        <div class="game-time">Oct 15, Sun</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Chicago Bulls</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/chi.png" alt="Bulls Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                                <span class="team-name-small home">Timberwolves (H)</span>
+                            </div>
+                        </div>
+                        <div class="game-result win">
+                            123 - 115
+                        </div>
+                    </div>
+
+                    <!-- Game Item 4 -->
+                    <div class="schedule-item" data-type="past" data-location="home">
+                        <div class="game-time">Oct 12, Thu</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Portland Trail Blazers</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/por.png" alt="Trail Blazers Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                                <span class="team-name-small home">Timberwolves (H)</span>
+                            </div>
+                        </div>
+                        <div class="game-result win">
+                            118 - 109
+                        </div>
+                    </div>
+
+                    <!-- Game Item 5 -->
+                    <div class="schedule-item" data-type="past" data-location="away">
+                        <div class="game-time">Oct 10, Tue</div>
+                        <div class="game-vs">
+                            <div class="team-info">
+                                <span class="team-name-small">Timberwolves (A)</span>
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo-small">
+                            </div>
+                            <div class="versus">VS</div>
+                            <div class="team-info home">
+                                <img src="https://a.espncdn.com/i/teamlogos/nba/500/sac.png" alt="Kings Logo" class="team-logo-small">
+                                <span class="team-name-small home">Sacramento Kings</span>
+                            </div>
+                        </div>
+                        <div class="game-result win">
+                            107 - 102
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Area -->
+    <section class="subscribe">
+        <div class="container">
+            <h2>Subscribe to Game Alerts</h2>
+            <p>Get alerts and live updates for every game</p>
+            <form class="subscribe-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="footer-team-logo">
+                    <span>Minnesota Timberwolves</span>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                        <li><a href="news.html">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Minnesota Timberwolves Fan Site. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Game schedule tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const scheduleItems = document.querySelectorAll('.schedule-item');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to current button
+                    this.classList.add('active');
+                    
+                    const tabType = this.getAttribute('data-tab');
+                    
+                    // Show or hide schedule items
+                    scheduleItems.forEach(item => {
+                        if (tabType === 'all') {
+                            item.style.display = 'flex';
+                        } else if (tabType === 'upcoming') {
+                            item.style.display = item.getAttribute('data-type') === 'upcoming' ? 'flex' : 'none';
+                        } else if (tabType === 'home') {
+                            item.style.display = item.getAttribute('data-location') === 'home' ? 'flex' : 'none';
+                        } else if (tabType === 'away') {
+                            item.style.display = item.getAttribute('data-location') === 'away' ? 'flex' : 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

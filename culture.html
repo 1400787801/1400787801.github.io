@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Culture - Minnesota Timberwolves</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Team Culture Page Specific Styles */
+        .culture-section {
+            padding: 100px 0 60px;
+            background-color: #f8f9fa;
+        }
+        
+        .culture-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .culture-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #00BFFF;
+        }
+        
+        .culture-header h2 {
+            font-size: 2.8rem;
+            color: #0C2340;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .culture-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Team History */
+        .team-history {
+            background-color: white;
+            border-radius: 12px;
+            padding: 50px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: #00BFFF;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: #0C2340;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #00BFFF;
+        }
+        
+        .history-timeline {
+            position: relative;
+            margin-top: 40px;
+        }
+        
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            height: 100%;
+            width: 2px;
+            background-color: #e0e0e0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 100px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-year {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 80px;
+            background-color: #0C2340;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            z-index: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-content {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #00BFFF;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-content {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-content h4 {
+            font-size: 1.3rem;
+            color: #0C2340;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* Mascot Section */
+        .mascot-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 50px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mascot-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .mascot-image {
+            flex: 0 0 300px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .mascot-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .mascot-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .mascot-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .mascot-info h3 {
+            font-size: 1.8rem;
+            color: #0C2340;
+            margin-bottom: 20px;
+        }
+        
+        .mascot-info p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .mascot-facts {
+            list-style: none;
+            margin: 25px 0;
+        }
+        
+        .mascot-facts li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .mascot-facts li i {
+            color: #00BFFF;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        /* Fan Culture */
+        .fan-culture {
+            background-color: white;
+            border-radius: 12px;
+            padding: 50px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fan-culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .fan-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .fan-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .fan-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .fan-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .fan-item:hover .fan-image img {
+            transform: scale(1.1);
+        }
+        
+        .fan-content {
+            padding: 25px;
+        }
+        
+        .fan-content h4 {
+            font-size: 1.4rem;
+            color: #0C2340;
+            margin-bottom: 15px;
+        }
+        
+        .fan-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* Team Traditions */
+        .team-traditions {
+            background-color: white;
+            border-radius: 12px;
+            padding: 50px;
+            margin-bottom: 60px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .traditions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .tradition-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .tradition-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .tradition-icon {
+            flex: 0 0 60px;
+            height: 60px;
+            background-color: #0C2340;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .tradition-content h4 {
+            font-size: 1.3rem;
+            color: #0C2340;
+            margin-bottom: 10px;
+        }
+        
+        .tradition-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* Community Section */
+        .community-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 50px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .community-highlight {
+            background: linear-gradient(135deg, #0C2340 0%, #1a3a6b 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .community-highlight h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .community-highlight p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        
+        .btn-outline {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: #0C2340;
+        }
+        
+        .community-projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+        
+        .project-content {
+            padding: 20px;
+        }
+        
+        .project-content h4 {
+            font-size: 1.3rem;
+            color: #0C2340;
+            margin-bottom: 10px;
+        }
+        
+        .project-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .culture-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .team-history,
+            .mascot-section,
+            .fan-culture,
+            .team-traditions,
+            .community-section {
+                padding: 30px;
+            }
+            
+            .mascot-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .mascot-image {
+                flex: 1;
+                max-width: 100%;
+            }
+            
+            .timeline-item {
+                padding-left: 80px;
+            }
+            
+            .timeline-year {
+                width: 60px;
+                height: 60px;
+                font-size: 1.1rem;
+            }
+            
+            .timeline-content {
+                padding: 15px;
+            }
+            
+            .tradition-item {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+            
+            .community-highlight {
+                padding: 30px 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .culture-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .culture-header p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .team-history,
+            .mascot-section,
+            .fan-culture,
+            .team-traditions,
+            .community-section {
+                padding: 20px;
+            }
+            
+            .timeline-item {
+                padding-left: 70px;
+            }
+            
+            .timeline-year {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html"><img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo"></a>
+                    <span class="team-name">Minnesota Timberwolves</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="culture.html" class="active">Team Culture</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Team Culture Page Header -->
+    <section class="culture-section">
+        <div class="container">
+            <div class="culture-header">
+                <h2>Timberwolves Team Culture</h2>
+                <p>Explore the Minnesota Timberwolves' rich history, traditions, and fan culture</p>
+            </div>
+
+            <!-- Team History -->
+            <div class="team-history">
+                <h3 class="section-title">Team History</h3>
+                <p>The Minnesota Timberwolves were established in 1989 as part of the NBA expansion. Though relatively young, the Timberwolves have built a unique team culture and traditions, developed many outstanding players, and gained a loyal fan base.
+                
+                <div class="history-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1989</div>
+                        <div class="timeline-content">
+                            <h4>Team Establishment</h4>
+                            <p>The Timberwolves were officially established as part of the NBA expansion, becoming Minnesota's first NBA team. The team name was inspired by Minnesota's rich forest resources and wildlife.
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1995</div>
+                        <div class="timeline-content">
+                            <h4>Drafting Garnett</h4>
+                            <p>The Timberwolves selected high school player Kevin Garnett with the 5th overall pick in the 1995 NBA Draft, a decision that changed the team's fortune and ushered in a new era for the franchise.
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2004</div>
+                        <div class="timeline-content">
+                            <h4>Best Season in Team History</h4>
+                            <p>Under Garnett's leadership, the Timberwolves achieved a 58-24 regular season record and reached the Western Conference Finals for the first time, marking the best season in franchise history.
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-content">
+                            <h4>Drafting Towns</h4>
+                            <p>The Timberwolves selected Karl-Anthony Towns with the first overall pick in the 2015 NBA Draft, beginning the team's rebuilding process.
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content">
+                            <h4>Edwards Joins the Team</h4>
+                            <p>The Timberwolves selected Anthony Edwards with the first overall pick in the 2020 NBA Draft, forming the new core of the team alongside Towns.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mascot Section -->
+            <div class="mascot-section">
+                <h3 class="section-title">Mascot - Crunch the Wolf</h3>
+                <div class="mascot-container">
+                    <div class="mascot-image">
+                        <img src="https://pic1.zhimg.com/50/v2-b44ccd31831b4de22dd2be0a45ec2d25_720w.jpg?source=1def8aca" alt="Timberwolves Mascot Crunch" class="responsive-image">
+                    </div>
+                    <div class="mascot-info">
+                        <h3>Crunch the Wolf</h3>
+                        <p>Crunch is the official mascot of the Timberwolves, bringing joy and excitement to the team since 1996. As an energetic gray wolf, Crunch always manages to pump up the crowd during home games and cheer for the team.
+                        <ul class="mascot-facts">
+                            <li><i class="fas fa-paw"></i> Debuted in 1996, one of the NBA's most popular mascots</li>
+                            <li><i class="fas fa-paw"></i> Frequently participates in community events, bringing joy to Minnesota's children</li>
+                            <li><i class="fas fa-paw"></i> Known for spectacular dunk performances and interactive segments</li>
+                            <li><i class="fas fa-paw"></i> Represents the Timberwolves' tenacity and brave spirit
+                        </ul>
+                        <p>Crunch is not only an entertainment star on game days but also an important representative of the team's community service, frequently participating in charity events and youth basketball camps, serving as an important bridge connecting the team and its fans.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fan Culture -->
+            <div class="fan-culture">
+                <h3 class="section-title">Fan Culture</h3>
+                <p>The Timberwolves have a loyal and passionate fan base known as the "Wolf Pack". Regardless of the team's performance, fans remain dedicated and create an electrifying atmosphere at Target Center.
+                
+                <div class="fan-culture-grid">
+                    <div class="fan-item">
+                        <div class="fan-image">
+                            <img src="https://ts4.tc.mm.bing.net/th/id/OIP-C.uIpw5R4KNYQwMoRd88vb_QHaE7?cb=12ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Fans Watching Game" class="responsive-image">
+                        </div>
+                        <div class="fan-content">
+                            <h4>Target Center Atmosphere</h4>
+                            <p>The Timberwolves' home arena, Target Center, is one of the loudest in the league. When games reach critical moments, the crowd's roar becomes deafening, providing powerful emotional support for the team.
+                        </div>
+                    </div>
+                    
+                    <div class="fan-item">
+                        <div class="fan-image">
+                            <img src="https://ts1.tc.mm.bing.net/th/id/R-C.2cd1e09d0cfb39757ba860f54f7db0db?rik=VYgBXgFsSwAHsQ&riu=http%3a%2f%2fphotocdn.sohu.com%2f20121227%2fImg361718966.jpg&ehk=gJ2Esy%2bselv6Hf1Lr7Bld2hL4v7IuEsDv1TJNRcer6I%3d&risl=&pid=ImgRaw&r=0" alt="Fan Merchandise" class="responsive-image">
+                        </div>
+                        <div class="fan-content">
+                            <h4>Fan Attire Culture</h4>
+                            <p>Timberwolves fans are known for their creative attire and costumes. On game days, the arena is filled with fans wearing the team's colors (blue, green, and white), and some even dress up elaborately as wolves.
+                        </div>
+                    </div>
+                    
+                    <div class="fan-item">
+                        <div class="fan-image">
+                            <img src="https://q1.itc.cn/images01/20240522/1151c6f0f9c4448faf254bcd5da012c4.jpeg" alt="Fan Events" class="responsive-image">
+                        </div>
+                        <div class="fan-content">
+                            <h4>Fan Activities</h4>
+                            <p>The Timberwolves organize a variety of fan activities, including fan meet-ups, autograph sessions, and theme nights. These activities not only strengthen the connection between fans and the team but also enrich the fan experience.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Traditions -->
+            <div class="team-traditions">
+                <h3 class="section-title">Team Traditions</h3>
+                <p>Though the Timberwolves don't have a long history, they have already developed some unique team traditions and rituals that are important parts of the team culture.
+                
+                <ul class="traditions-list">
+                    <li class="tradition-item">
+                        <div class="tradition-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="tradition-content">
+                            <h4>Wolf Howl Ceremony</h4>
+                            <p>Before home games begin, there's a special wolf howl ceremony where the entire crowd howls together, symbolizing the unity and strength of the wolf pack.
+                        </div>
+                    </li>
+                    
+                    <li class="tradition-item">
+                        <div class="tradition-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="tradition-content">
+                            <h4>Legendary Retired Jersey</h4>
+                            <p>The Timberwolves have retired Kevin Garnett's number 21 jersey in recognition of his outstanding contributions to the team. Garnett is one of the greatest players in team history.
+                        </div>
+                    </li>
+                    
+                    <li class="tradition-item">
+                        <div class="tradition-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="tradition-content">
+                            <h4>Annual Community Award</h4>
+                            <p>The team presents the "Timberwolves Community Service Award" each year to honor players who excel in community service, demonstrating the team's commitment to social responsibility.
+                        </div>
+                    </li>
+                    
+                    <li class="tradition-item">
+                        <div class="tradition-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="tradition-content">
+                            <h4>Environmental Tradition</h4>
+                            <p>The Timberwolves actively participate in environmental protection activities, and their home arena Target Center is one of the most eco-friendly venues in the NBA, reflecting the team's close connection to Minnesota's natural environment.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Community Activities -->
+            <div class="community-section">
+                <h3 class="section-title">Community Activities</h3>
+                <p>The Timberwolves actively participate in community activities, giving back to Minnesota fans and communities, which is an important part of the team's culture.
+                
+                <div class="community-highlight">
+                    <h3>Timberwolves Community Foundation</h3>
+                    <p>The Timberwolves Community Foundation is committed to creating a better future for Minnesota's youth through basketball and education. The foundation supports various educational programs, youth basketball leagues, and community development initiatives.
+                    <a href="#" class="btn-outline">Learn More</a>
+                </div>
+                
+                <div class="community-projects">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://www.missionhillschina.com/wp-content/uploads/2018/11/2018-07-27-03.jpg" alt="Youth Basketball Camp" class="responsive-image">
+                        </div>
+                        <div class="project-content">
+                            <h4>Youth Basketball Camps</h4>
+                            <p>Every summer, the Timberwolves host youth basketball camps, teaching basketball skills while emphasizing the importance of teamwork, sportsmanship, and healthy lifestyles.
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://www.missionhillschina.com/wp-content/uploads/2018/11/2018-07-27-03.jpg" class="responsive-image">
+                        </div>
+                        <div class="project-content">
+                            <h4>Reading Achievement Program</h4>
+                            <p>Timberwolves players and mascot frequently visit local schools to encourage children to read and provide rewards and incentives for students participating in reading programs.
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://www.missionhillschina.com/wp-content/uploads/2018/11/2018-07-27-03.jpg" alt="Food Donation" class="responsive-image">
+                        </div>
+                        <div class="project-content">
+                            <h4>Community Food Donations</h4>
+                            <p>The Timberwolves partner with local food banks to organize food donation drives, helping to address hunger in the community and demonstrating the team's care and responsibility towards the community.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Area -->
+    <section class="subscribe">
+        <div class="container">
+            <h2>Subscribe to Timberwolves News</h2>
+            <p>Get the latest Timberwolves news and exclusive content first
+            <form class="subscribe-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="footer-team-logo">
+                    <span>Minnesota Timberwolves</span>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="culture.html">Team Culture</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Minnesota Timberwolves Fan Site. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>

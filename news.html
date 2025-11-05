@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timberwolves News - NBA Fan Site</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* News Page Specific Styles */
+        /* Custom spinner animation */
+        .custom-spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .news-section {
+            padding: 100px 0 60px;
+            background-color: #f8f9fa;
+        }
+        
+        .news-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .news-header h2 {
+            font-size: 2.5rem;
+            color: #0C2340;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .news-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #00BFFF;
+        }
+        
+        .news-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .news-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .main-news {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .main-news:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .main-news-image {
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .main-news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .main-news:hover .main-news-image img {
+            transform: scale(1.05);
+        }
+        
+        .main-news-content {
+            padding: 30px;
+        }
+        
+        .news-category {
+            display: inline-block;
+            background-color: #00BFFF;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .news-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #0C2340;
+            line-height: 1.3;
+        }
+        
+        .news-excerpt {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .news-meta {
+            display: flex;
+            align-items: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .news-date {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-date i {
+            margin-right: 8px;
+        }
+        
+        .news-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .news-author i {
+            margin-right: 8px;
+        }
+        
+        .news-read-more {
+            display: inline-flex;
+            align-items: center;
+            color: #00BFFF;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .news-read-more:hover {
+            color: #0C2340;
+        }
+        
+        .news-read-more i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .news-read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        .news-sidebar {
+            flex: 0 0 350px;
+        }
+        
+        .latest-news {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-title {
+            font-size: 1.5rem;
+            color: #0C2340;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .sidebar-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #00BFFF;
+        }
+        
+        .latest-news-list {
+            list-style: none;
+        }
+        
+        .latest-news-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            transition: transform 0.3s ease;
+        }
+        
+        .latest-news-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .latest-news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .latest-news-image {
+            flex: 0 0 80px;
+            height: 80px;
+            overflow: hidden;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        
+        .latest-news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .latest-news-item:hover .latest-news-image img {
+            transform: scale(1.1);
+        }
+        
+        .latest-news-content {
+            flex: 1;
+        }
+        
+        .latest-news-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0C2340;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .latest-news-title:hover {
+            color: #00BFFF;
+        }
+        
+        .latest-news-date {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .news-categories {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .category-item {
+            margin-bottom: 15px;
+        }
+        
+        .category-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .category-link:hover {
+            color: #00BFFF;
+        }
+        
+        .category-count {
+            background-color: #f8f9fa;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .featured-videos {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-item {
+            margin-bottom: 20px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .video-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .video-item:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 191, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .play-button:hover {
+            background-color: #00BFFF;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .video-title {
+            padding: 15px;
+            font-weight: 600;
+            color: #0C2340;
+            transition: color 0.3s ease;
+        }
+        
+        .video-title:hover {
+            color: #00BFFF;
+        }
+        
+        .more-news {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .more-news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .more-news-item {
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .more-news-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .more-news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .more-news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .more-news-item:hover .more-news-image img {
+            transform: scale(1.05);
+        }
+        
+        .more-news-content {
+            padding: 20px;
+        }
+        
+        .more-news-category {
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+        
+        .more-news-title {
+            font-size: 1.3rem;
+            color: #0C2340;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .more-news-meta {
+            display: flex;
+            align-items: center;
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        .load-more {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .news-sidebar {
+                flex: 1;
+                min-width: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .news-header h2 {
+                font-size: 2rem;
+            }
+            
+            .main-news-content {
+                padding: 20px;
+            }
+            
+            .news-title {
+                font-size: 1.5rem;
+            }
+            
+            .latest-news-image {
+                flex: 0 0 60px;
+                height: 60px;
+            }
+            
+            .video-thumbnail {
+                height: 150px;
+            }
+            
+            .more-news {
+                padding: 20px;
+            }
+            
+            .more-news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .news-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .latest-news-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .latest-news-image {
+                width: 100%;
+                height: 150px;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html"><img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="team-logo"></a>
+                    <span class="team-name">Minnesota Timberwolves</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="news.html" class="active">News</a></li>
+                    <li><a href="culture.html">Team Culture</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="container">
+            <div class="news-header">
+                <h2>Latest Timberwolves News</h2>
+                <p>Stay updated with the latest Minnesota Timberwolves news, player interviews, and game recaps</p>
+            </div>
+
+            <!-- Main News and Sidebar -->
+            <div class="news-container">
+                <!-- Main News -->
+                <div class="main-news">
+                    <div class="main-news-image">
+                        <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Timberwolves Defeat Warriors" class="responsive-image">
+                    </div>
+                    <div class="main-news-content">
+                        <span class="news-category">Game Recap</span>
+                        <h3 class="news-title">Edwards Scores 34 Points as Timberwolves Defeat Warriors 115-108</h3>
+                        <p class="news-excerpt">Minneapolis - Anthony Edwards delivered an outstanding performance against the Golden State Warriors with 34 points, 6 rebounds, and 5 assists, leading the Timberwolves to an important victory. Towns contributed a double-double with 22 points and 12 rebounds, while Gobert added 3 blocks on defense.</p>
+                        <div class="news-meta">
+                            <div class="news-date">
+                                <i class="far fa-calendar-alt"></i>
+                                October 21, 2023
+                            </div>
+                            <div class="news-author">
+                                <i class="far fa-user"></i>
+                                Reporter: Mike Johnson
+                            </div>
+                        </div>
+                        <a href="#" class="news-read-more">
+                            Read Full Story
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="news-sidebar">
+                    <!-- Latest News -->
+                    <div class="latest-news">
+                        <h3 class="sidebar-title">Latest News</h3>
+                        <ul class="latest-news-list">
+                            <li class="latest-news-item">
+                                <div class="latest-news-image">
+                                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Towns Training">
+                                </div>
+                                <div class="latest-news-content">
+                                    <a href="#" class="latest-news-title">Towns on Season Goals: We Can Reach Western Conference Finals</a>
+                                    <div class="latest-news-date">October 20, 2023</div>
+                                </div>
+                            </li>
+                            <li class="latest-news-item">
+                                <div class="latest-news-image">
+                                    <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Gobert Defense">
+                                </div>
+                                <div class="latest-news-content">
+                                    <a href="#" class="latest-news-title">Gobert: Our Defense Will Be the Team's Greatest Strength</a>
+                                    <div class="latest-news-date">October 19, 2023</div>
+                                </div>
+                            </li>
+                            <li class="latest-news-item">
+                                <div class="latest-news-image">
+                                    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Coach Finch">
+                                </div>
+                                <div class="latest-news-content">
+                                    <a href="#" class="latest-news-title">Coach Finch: Young Players' Growth Is Key to the Team's Future</a>
+                                    <div class="latest-news-date">October 18, 2023</div>
+                                </div>
+                            </li>
+                            <li class="latest-news-item">
+                                <div class="latest-news-image">
+                                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="McDaniels">
+                                </div>
+                                <div class="latest-news-content">
+                                    <a href="#" class="latest-news-title">McDaniels on Extension: I Want to Spend My Entire Career Here</a>
+                                    <div class="latest-news-date">October 17, 2023</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- News Categories -->
+                    <div class="news-categories">
+                        <h3 class="sidebar-title">News Categories</h3>
+                        <ul class="categories-list">
+                            <li class="category-item">
+                                <a href="#" class="category-link">
+                                    <span>Game Recaps</span>
+                                    <span class="category-count">24</span>
+                                </a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-link">
+                                    <span>Player Interviews</span>
+                                    <span class="category-count">18</span>
+                                </a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-link">
+                                    <span>Injury Updates</span>
+                                    <span class="category-count">9</span>
+                                </a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-link">
+                                    <span>Front Office Updates</span>
+                                    <span class="category-count">12</span>
+                                </a>
+                            </li>
+                            <li class="category-item">
+                                <a href="#" class="category-link">
+                                    <span>Community Events</span>
+                                    <span class="category-count">7</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Featured Videos -->
+                    <div class="featured-videos">
+                        <h3 class="sidebar-title">Featured Videos</h3>
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1526234352917-ea7d600c444a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Season Highlights">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-title">Timberwolves First 5 Games Highlights</div>
+                        </div>
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Edwards Training">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-title">Edwards' Off-Season Training Documentary</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More News -->
+            <div class="more-news">
+                <h3 class="sidebar-title">More News</h3>
+                <div class="more-news-grid">
+                    <!-- More News Item 1 -->
+                    <div class="more-news-item">
+                        <div class="more-news-image">
+                            <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.GEzO0aRLxR94mLcrqerQewHaE8?cb=12ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Conley">
+                        </div>
+                        <div class="more-news-content">
+                            <span class="more-news-category">Player Interview</span>
+                            <h4 class="more-news-title">Conley: Young Teammates' Energy Makes Me Feel Young</h4>
+                            <div class="more-news-meta">
+                                <i class="far fa-calendar-alt"></i>
+                                October 16, 2023
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More News Item 2 -->
+                    <div class="more-news-item">
+                        <div class="more-news-image">
+                            <img src="https://ts1.tc.mm.bing.net/th/id/OIP-C.PMH62o3JzVm-IYYuQcftGAHaJR?cb=12ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Team Practice">
+                        </div>
+                        <div class="more-news-content">
+                            <span class="more-news-category">Practice Report</span>
+                            <h4 class="more-news-title">Timberwolves Training Camp Focus: Improving Defensive Transition</h4>
+                            <div class="more-news-meta">
+                                <i class="far fa-calendar-alt"></i>
+                                October 15, 2023
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More News Item 3 -->
+                    <div class="more-news-item">
+                        <div class="more-news-image">
+                            <img src="https://www.missionhillschina.com/wp-content/uploads/2018/11/2018-07-27-03.jpg" alt="Fan Event">
+                        </div>
+                        <div class="more-news-content">
+                            <span class="more-news-category">Community Event</span>
+                            <h4 class="more-news-title">Timberwolves Players Participate in Minnesota Youth Basketball Camp</h4>
+                            <div class="more-news-meta">
+                                <i class="far fa-calendar-alt"></i>
+                                October 14, 2023
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="load-more">
+                    <button class="btn-primary">Load More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscription Area -->
+    <section class="subscribe">
+        <div class="container">
+            <h2>Subscribe to Timberwolves News</h2>
+            <p>Get the latest Timberwolves news and exclusive content first</p>
+            <form class="subscribe-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://a.espncdn.com/i/teamlogos/nba/500/min.png" alt="Timberwolves Logo" class="footer-team-logo">
+                    <span>Minnesota Timberwolves</span>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                        <li><a href="news.html">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Minnesota Timberwolves Fan Site. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // News Page Specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load More Button Functionality
+            const loadMoreBtn = document.querySelector('.load-more button');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    // Show loading state with custom spinner
+                    this.innerHTML = '<i class="fas fa-spinner custom-spin"></i> Loading...';
+                    
+                    // Simulate loading delay
+                    setTimeout(() => {
+                        this.innerHTML = 'Load More';
+                        // Actual load more news logic can be added here
+                    }, 1500);
+                });
+            }
+            
+            // Video Play Button Click Effect
+            const playButtons = document.querySelectorAll('.play-button');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Actual video playback logic can be added here
+                    alert('Video playback functionality will be implemented here');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
